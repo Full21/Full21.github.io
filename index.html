@@ -1,1287 +1,1673 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jean Marc FULTANG — Développeur</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #1A3C5E;
-    --blue: #5BA3D0;
-    --blue-light: #D6EAF8;
-    --blue-mid: #2980B9;
-    --white: #FAFBFC;
-    --off: #F0F4F8;
-    --gray: #64748B;
-    --dark: #0F2440;
-    --text: #1E293B;
-    --card-bg: #FFFFFF;
-    --border: #CBD5E1;
-    --accent: #E8F4FD;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 0 2rem;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(250,251,252,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: var(--navy);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--gray);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--navy); }
-
-  .lang-btn {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: var(--accent);
-    border: 1px solid var(--blue);
-    color: var(--blue-mid);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .lang-btn:hover {
-    background: var(--blue);
-    color: #fff;
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    padding: 8rem 2rem 4rem;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--navy) 0%, #1e4d7a 50%, #1a3c5e 100%);
-    z-index: 0;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-image:
-      linear-gradient(rgba(91,163,208,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(91,163,208,0.07) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .hero-blob {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(91,163,208,0.15) 0%, transparent 70%);
-    top: -100px;
-    right: -100px;
-    z-index: 1;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 1100px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 32px;
-    height: 2px;
-    background: var(--blue);
-  }
-
-  .hero-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    color: #fff;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-name .first { display: block; }
-  .hero-name .last {
-    display: block;
-    color: var(--blue);
-  }
-
-  .hero-title {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: rgba(255,255,255,0.7);
-    font-weight: 300;
-    margin-bottom: 2rem;
-    max-width: 520px;
-  }
-
-  .hero-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--blue);
-    color: #fff;
-    padding: 0.85rem 1.75rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    border: 2px solid var(--blue);
-  }
-
-  .btn-primary:hover {
-    background: #4a90c0;
-    border-color: #4a90c0;
-    transform: translateY(-1px);
-  }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: rgba(255,255,255,0.85);
-    padding: 0.85rem 1.75rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    border: 2px solid rgba(255,255,255,0.3);
-  }
-
-  .btn-outline:hover {
-    border-color: rgba(255,255,255,0.7);
-    color: #fff;
-    transform: translateY(-1px);
-  }
-
-  .hero-socials {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .hero-socials a {
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .hero-socials a:hover { color: var(--blue); }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255,255,255,0.35);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, rgba(91,163,208,0.6));
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-  }
-
-  /* SECTIONS */
-  section {
-    padding: 5rem 2rem;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--blue-mid);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-label::before {
-    content: '';
-    display: inline-block;
-    width: 24px;
-    height: 2px;
-    background: var(--blue);
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    color: var(--navy);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-  }
-
-  /* ABOUT */
-  #about { background: var(--off); }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .about-text p {
-    color: var(--gray);
-    margin-bottom: 1.1rem;
-    line-height: 1.8;
-  }
-
-  .about-text p strong {
-    color: var(--navy);
-    font-weight: 500;
-  }
-
-  .about-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-
-  .stat-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-
-  .stat-label {
-    font-size: 0.82rem;
-    color: var(--gray);
-    font-weight: 400;
-  }
-
-  .stat-card.accent {
-    background: var(--navy);
-    border-color: var(--navy);
-  }
-
-  .stat-card.accent .stat-number { color: var(--blue); }
-  .stat-card.accent .stat-label { color: rgba(255,255,255,0.6); }
-
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .skill-category {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-
-  .skill-category-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--blue-mid);
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--blue-light);
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .skill-tag {
-    background: var(--accent);
-    color: var(--navy);
-    border: 1px solid rgba(91,163,208,0.35);
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 0.82rem;
-    font-weight: 500;
-  }
-
-  /* PROJECTS */
-  #projects { background: var(--off); }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .project-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(26,60,94,0.12);
-  }
-
-  .project-header {
-    background: linear-gradient(135deg, var(--navy) 0%, #2a5480 100%);
-    padding: 1.75rem 1.75rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-header::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: rgba(91,163,208,0.12);
-  }
-
-  .project-lang {
-    display: inline-block;
-    background: rgba(91,163,208,0.2);
-    color: var(--blue);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-bottom: 0.75rem;
-    border: 1px solid rgba(91,163,208,0.3);
-  }
-
-  .project-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #fff;
-    line-height: 1.25;
-  }
-
-  .project-body {
-    padding: 1.5rem 1.75rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .project-desc {
-    color: var(--gray);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-    flex: 1;
-  }
-
-  .project-points {
-    list-style: none;
-    margin-bottom: 1.25rem;
-  }
-
-  .project-points li {
-    font-size: 0.85rem;
-    color: var(--gray);
-    padding: 3px 0 3px 1rem;
-    position: relative;
-  }
-
-  .project-points li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--blue);
-    font-weight: 600;
-  }
-
-  .project-footer {
-    display: flex;
-    gap: 0.75rem;
-  }
-
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--blue-mid);
-    text-decoration: none;
-    padding: 6px 12px;
-    border: 1px solid var(--blue-light);
-    border-radius: 6px;
-    background: var(--accent);
-    transition: all 0.2s;
-  }
-
-  .project-link:hover {
-    background: var(--blue);
-    color: #fff;
-    border-color: var(--blue);
-  }
-
-  /* EXPERIENCE */
-  .timeline {
-    position: relative;
-    margin-top: 2.5rem;
-    padding-left: 2rem;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 7px;
-    top: 8px;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--blue), var(--blue-light));
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 2.5rem;
-  }
-
-  .timeline-dot {
-    position: absolute;
-    left: -2rem;
-    top: 6px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--blue);
-    border: 3px solid var(--white);
-    outline: 2px solid var(--blue);
-  }
-
-  .timeline-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem 1.75rem;
-  }
-
-  .timeline-meta {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .timeline-company {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--navy);
-  }
-
-  .timeline-role {
-    font-size: 0.88rem;
-    color: var(--gray);
-    margin-top: 2px;
-    font-style: italic;
-  }
-
-  .timeline-date {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--blue-mid);
-    background: var(--accent);
-    border: 1px solid var(--blue-light);
-    padding: 4px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-
-  .timeline-points {
-    list-style: none;
-  }
-
-  .timeline-points li {
-    font-size: 0.9rem;
-    color: var(--gray);
-    padding: 4px 0 4px 1.1rem;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .timeline-points li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--blue);
-    font-weight: 600;
-  }
-
-  /* CONTACT */
-  #contact { background: var(--navy); }
-
-  #contact .section-label { color: var(--blue); }
-  #contact .section-label::before { background: var(--blue); }
-  #contact .section-title { color: #fff; }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    margin-top: 2.5rem;
-  }
-
-  .contact-desc {
-    color: rgba(255,255,255,0.65);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
-
-  .contact-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-
-  .contact-item:hover { color: var(--blue); }
-
-  .contact-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: rgba(91,163,208,0.15);
-    border: 1px solid rgba(91,163,208,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1rem;
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .form-group label {
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 0.05em;
-  }
-
-  .form-group input,
-  .form-group textarea {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(91,163,208,0.25);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    transition: border-color 0.2s;
-    resize: none;
-  }
-
-  .form-group input::placeholder,
-  .form-group textarea::placeholder {
-    color: rgba(255,255,255,0.25);
-  }
-
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--blue);
-  }
-
-  .btn-send {
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    align-self: flex-start;
-  }
-
-  .btn-send:hover {
-    background: #4a90c0;
-    transform: translateY(-1px);
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--dark);
-    padding: 1.5rem 2rem;
-    text-align: center;
-    color: rgba(255,255,255,0.3);
-    font-size: 0.82rem;
-  }
-
-  /* ANIMATIONS */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* HAMBURGER (mobile) */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--navy);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  @media (max-width: 768px) {
-    .hamburger { display: flex; }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 64px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jean Marc FULTANG — Développeur Full-Stack</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23080c14'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='700' font-size='13' fill='%2300c878'>{JMF}</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080c14;
+      --bg2: #0d1220;
+      --bg3: #111827;
+      --card: #131b2e;
+      --border: rgba(255, 255, 255, 0.07);
+      --border2: rgba(0, 200, 120, 0.25);
+      --green: #00c878;
+      --green2: #00a862;
+      --blue: #3b82f6;
+      --text: #e8edf5;
+      --muted: #6b7a99;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.7
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--green2);
+      border-radius: 2px
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
       left: 0;
       right: 0;
-      background: rgba(250,251,252,0.98);
-      flex-direction: column;
-      padding: 1.5rem 2rem;
-      gap: 1.25rem;
-      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      background: rgba(8, 12, 20, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border)
     }
 
-    .nav-links.open { display: flex; }
+    .nav-logo {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .05em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0
+    }
 
-    .about-grid,
-    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-logo .bracket {
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--green)
+    }
 
-    .hero-name { font-size: 3rem; }
-  }
-</style>
-</head>
-<body>
+    .nav-logo .initials {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -.03em;
+      padding: 0 1px
+    }
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">JMF.</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-    <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
-    <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
-    <li><a href="#experience" data-i18n="nav_exp">Expériences</a></li>
-    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-    <li>
-      <button class="lang-btn" id="langBtn" onclick="toggleLang()">
-        <span id="langIcon">🌐</span>
-        <span id="langLabel">EN</span>
-      </button>
-    </li>
-  </ul>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none
+    }
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-blob"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Étudiant en Informatique — L3 UHA Mulhouse</p>
-    <h1 class="hero-name">
-      <span class="first">Jean Marc</span>
-      <span class="last">FULTANG</span>
-    </h1>
-    <p class="hero-title" data-i18n="hero_title">
-      Développeur passionné par Java, Spring Boot et React — à la recherche d'un stage de 3 mois dès mai.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary" data-i18n="hero_cta1">Voir mes projets →</a>
-      <a href="Jean_Marc_CV.pdf" class="btn-outline" download data-i18n="hero_cta2">Télécharger mon CV</a>
-    </div>
-    <div class="hero-socials">
-      <a href="https://github.com/Full21" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/jean-marc-fultang" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="mailto:fultangnombousse@gmail.com">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email
-      </a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span data-i18n="hero_scroll">scroll</span>
-  </div>
-</section>
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+      letter-spacing: .04em;
+      text-transform: uppercase
+    }
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-text fade-up">
-        <p class="section-label" data-i18n="about_label">À propos</p>
-        <h2 class="section-title" data-i18n="about_title">Construire, apprendre,<br>livrer.</h2>
-        <p data-i18n="about_p1">
-          Étudiant en <strong>L3 Informatique à l'UHA (Mulhouse)</strong>, je me forme depuis les classes préparatoires à la rigueur du développement logiciel. J'ai eu l'occasion d'appliquer ces bases en conditions réelles lors de deux stages.
-        </p>
-        <p data-i18n="about_p2">
-          J'aime travailler sur des sujets concrets : un backend qui tient la charge, une interface qui fait sens pour l'utilisateur, un pipeline Git propre. Je suis à la recherche d'un <strong>stage de 3 mois dès mai</strong>.
-        </p>
-        <p data-i18n="about_p3">
-          En dehors du code : musique, course à pied, et veille technologique active — Fireship, Grafikart, TechWithTim font partie de mon quotidien.
-        </p>
-      </div>
-      <div class="about-stats fade-up">
-        <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label" data-i18n="stat1">Stages en entreprise</div>
-        </div>
-        <div class="stat-card accent">
-          <div class="stat-number">3+</div>
-          <div class="stat-label" data-i18n="stat2">Projets GitHub</div>
-        </div>
-        <div class="stat-card accent">
-          <div class="stat-number">5+</div>
-          <div class="stat-label" data-i18n="stat3">Technologies maîtrisées</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">L3</div>
-          <div class="stat-label" data-i18n="stat4">UHA Mulhouse</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    .nav-links a:hover {
+      color: var(--green)
+    }
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <p class="section-label fade-up" data-i18n="skills_label">Compétences</p>
-    <h2 class="section-title fade-up" data-i18n="skills_title">Ce que je maîtrise</h2>
-    <div class="skills-grid">
-      <div class="skill-category fade-up">
-        <div class="skill-category-title" data-i18n="sk_lang">Langages</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Java</span>
-          <span class="skill-tag">Java EE</span>
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">HTML / CSS</span>
-          <span class="skill-tag">SQL</span>
-        </div>
-      </div>
-      <div class="skill-category fade-up">
-        <div class="skill-category-title" data-i18n="sk_fw">Frameworks</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Spring Boot</span>
-          <span class="skill-tag">React JS</span>
-          <span class="skill-tag">Bootstrap</span>
-          <span class="skill-tag">JSP / Servlets</span>
-        </div>
-      </div>
-      <div class="skill-category fade-up">
-        <div class="skill-category-title" data-i18n="sk_db">Bases de données</div>
-        <div class="skill-tags">
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">Oracle</span>
-        </div>
-      </div>
-      <div class="skill-category fade-up">
-        <div class="skill-category-title" data-i18n="sk_tools">Outils</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">VS Code</span>
-          <span class="skill-tag">NetBeans</span>
-          <span class="skill-tag">UML</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: .78rem;
+      font-weight: 700;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 7px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none
+    }
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="container">
-    <p class="section-label fade-up" data-i18n="proj_label">Projets</p>
-    <h2 class="section-title fade-up" data-i18n="proj_title">Ce que j'ai construit</h2>
-    <div class="projects-grid">
+    .nav-cta:hover {
+      background: var(--green);
+      color: #000
+    }
 
-      <div class="project-card fade-up">
-        <div class="project-header">
-          <div class="project-lang">C++ · Équipe</div>
-          <div class="project-name" data-i18n="p1_name">Système de gestion de questionnaires</div>
-        </div>
-        <div class="project-body">
-          <p class="project-desc" data-i18n="p1_desc">Application console orientée objet pour créer et passer des questionnaires en mode évaluation ou apprentissage.</p>
-          <ul class="project-points">
-            <li data-i18n="p1_b1">Architecture OOP modélisée en UML</li>
-            <li data-i18n="p1_b2">QCM, texte libre, numérique — chargés depuis fichiers .txt</li>
-            <li data-i18n="p1_b3">Workflow Git pro : branches, pull requests, protection de main</li>
-          </ul>
-          <div class="project-footer">
-            <a href="https://github.com/Kawkawa2/gestionQuestionnaire" target="_blank" class="project-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px
+    }
 
-      <div class="project-card fade-up">
-        <div class="project-header">
-          <div class="project-lang">Java EE · Web</div>
-          <div class="project-name">AcadNotify</div>
-        </div>
-        <div class="project-body">
-          <p class="project-desc" data-i18n="p2_desc">Application web de gestion des notes étudiants, avec gestion des rôles et opérations CRUD complètes.</p>
-          <ul class="project-points">
-            <li data-i18n="p2_b1">Backend Java EE — JSP & Servlets</li>
-            <li data-i18n="p2_b2">Gestion des rôles administrateur</li>
-            <li data-i18n="p2_b3">CRUD complet sur les données académiques</li>
-          </ul>
-          <div class="project-footer">
-            <a href="https://github.com/Full21/AcadNotify" target="_blank" class="project-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s
+    }
 
-      <div class="project-card fade-up">
-        <div class="project-header">
-          <div class="project-lang">Java · Desktop</div>
-          <div class="project-name" data-i18n="p3_name">Calculatrice scientifique</div>
-        </div>
-        <div class="project-body">
-          <p class="project-desc" data-i18n="p3_desc">Calculatrice desktop avec interface graphique et opérations mathématiques avancées.</p>
-          <ul class="project-points">
-            <li data-i18n="p3_b1">Architecture MVC — Java Swing</li>
-            <li data-i18n="p3_b2">PGCD, PPCM, factorielle, trigonométrie</li>
-          </ul>
-          <div class="project-footer">
-            <a href="https://github.com/Full21/calculatrice" target="_blank" class="project-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 4rem;
+      position: relative;
+      overflow: hidden
+    }
 
-    </div>
-  </div>
-</section>
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0
+    }
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <p class="section-label fade-up" data-i18n="exp_label">Expériences</p>
-    <h2 class="section-title fade-up" data-i18n="exp_title">Parcours professionnel</h2>
-    <div class="timeline">
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 200, 120, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 120, .04) 1px, transparent 1px);
+      background-size: 50px 50px
+    }
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="timeline-meta">
-            <div>
-              <div class="timeline-company">OVA CONSULTING</div>
-              <div class="timeline-role" data-i18n="exp1_role">Stagiaire en développement web</div>
-            </div>
-            <div class="timeline-date">07/2025 — 08/2025</div>
-          </div>
-          <ul class="timeline-points">
-            <li data-i18n="exp1_b1">Site vitrine pour Perenco (Bootstrap) + plateforme de suivi énergétique (React JS + Spring Boot)</li>
-            <li data-i18n="exp1_b2">Déploiement du système de gestion de bibliothèque Koha sur Docker</li>
-          </ul>
-        </div>
-      </div>
+    .hero-glow {
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 200, 120, .07) 0%, transparent 65%);
+      pointer-events: none
+    }
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="timeline-meta">
-            <div>
-              <div class="timeline-company">MEDIA PRESS AFRICA</div>
-              <div class="timeline-role" data-i18n="exp2_role">Stagiaire en développement web</div>
-            </div>
-            <div class="timeline-date">05/2024 — 07/2024</div>
-          </div>
-          <ul class="timeline-points">
-            <li data-i18n="exp2_b1">Application Java EE de gestion des présences avec authentification par rôle</li>
-            <li data-i18n="exp2_b2">Modélisation BDD MySQL (employés, pointages) et tableaux de bord temps réel — solution déployée pour 8 employés</li>
-          </ul>
-        </div>
-      </div>
+    .hero-glow2 {
+      position: absolute;
+      bottom: -300px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, .06) 0%, transparent 65%);
+      pointer-events: none
+    }
 
-    </div>
-  </div>
-</section>
+    /* floating code snippets bg */
+    .code-float {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(0, 200, 120, .08);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 1
+    }
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <p class="section-label fade-up" data-i18n="contact_label">Contact</p>
-    <h2 class="section-title fade-up" data-i18n="contact_title">Travaillons ensemble</h2>
-    <div class="contact-grid">
-      <div class="fade-up">
-        <p class="contact-desc" data-i18n="contact_desc">
-          Je suis disponible pour un stage de 3 mois à partir de mai. N'hésitez pas à me contacter par email ou LinkedIn.
-        </p>
-        <div class="contact-items">
-          <a href="mailto:fultangnombousse@gmail.com" class="contact-item">
-            <div class="contact-icon">✉</div>
-            <span>fultangnombousse@gmail.com</span>
-          </a>
-          <a href="tel:0759331284" class="contact-item">
-            <div class="contact-icon">📞</div>
-            <span>07 59 33 12 84</span>
-          </a>
-          <a href="https://www.linkedin.com/in/jean-marc-fultang" target="_blank" class="contact-item">
-            <div class="contact-icon">in</div>
-            <span>linkedin.com/in/jean-marc-fultang</span>
-          </a>
-          <a href="https://github.com/Full21" target="_blank" class="contact-item">
-            <div class="contact-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            </div>
-            <span>github.com/Full21</span>
-          </a>
-        </div>
-      </div>
-      <div class="fade-up">
-        <form class="contact-form" action="https://formspree.io/f/mnjolgnr" method="POST">
-          <div class="form-group">
-            <label data-i18n="form_name">Nom</label>
-            <input type="text" placeholder="Marie Dupont" required>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="marie@entreprise.com" required>
-          </div>
-          <div class="form-group">
-            <label data-i18n="form_msg">Message</label>
-            <textarea rows="5" placeholder="..." required></textarea>
-          </div>
-          <button type="submit" class="btn-send" data-i18n="form_send">Envoyer →</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center
+    }
 
-<footer>
-  <p>© 2026 Jean Marc FULTANG — Mulhouse, France</p>
-</footer>
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 200, 120, .08);
+      border: 1px solid rgba(0, 200, 120, .25);
+      border-radius: 100px;
+      padding: 5px 14px;
+      margin-bottom: 1.5rem
+    }
 
-<script>
-const i18n = {
-  fr: {
-    nav_about: "À propos", nav_skills: "Compétences", nav_projects: "Projets",
-    nav_exp: "Expériences", nav_contact: "Contact",
-    hero_eyebrow: "Étudiant en Informatique — L3 UHA Mulhouse",
-    hero_title: "Développeur passionné par Java, Spring Boot et React — à la recherche d'un stage de 3 mois dès mai.",
-    hero_cta1: "Voir mes projets →", hero_cta2: "Télécharger mon CV",
-    hero_scroll: "scroll",
-    about_label: "À propos", about_title: "Construire, apprendre,\nlivrer.",
-    about_p1: "Étudiant en <strong>L3 Informatique à l'UHA (Mulhouse)</strong>, je me forme depuis les classes préparatoires à la rigueur du développement logiciel. J'ai eu l'occasion d'appliquer ces bases en conditions réelles lors de deux stages.",
-    about_p2: "J'aime travailler sur des sujets concrets : un backend qui tient la charge, une interface qui fait sens pour l'utilisateur, un pipeline Git propre. Je suis à la recherche d'un <strong>stage de 3 mois dès mai</strong>.",
-    about_p3: "En dehors du code : musique, course à pied, et veille technologique active — Fireship, Grafikart, TechWithTim font partie de mon quotidien.",
-    stat1: "Stages en entreprise", stat2: "Projets GitHub",
-    stat3: "Technologies maîtrisées", stat4: "UHA Mulhouse",
-    skills_label: "Compétences", skills_title: "Ce que je maîtrise",
-    sk_lang: "Langages", sk_fw: "Frameworks", sk_db: "Bases de données", sk_tools: "Outils",
-    proj_label: "Projets", proj_title: "Ce que j'ai construit",
-    p1_name: "Système de gestion de questionnaires",
-    p1_desc: "Application console orientée objet pour créer et passer des questionnaires en mode évaluation ou apprentissage.",
-    p1_b1: "Architecture OOP modélisée en UML",
-    p1_b2: "QCM, texte libre, numérique — chargés depuis fichiers .txt",
-    p1_b3: "Workflow Git pro : branches, pull requests, protection de main",
-    p2_desc: "Application web de gestion des notes étudiants, avec gestion des rôles et opérations CRUD complètes.",
-    p2_b1: "Backend Java EE — JSP & Servlets",
-    p2_b2: "Gestion des rôles administrateur",
-    p2_b3: "CRUD complet sur les données académiques",
-    p3_name: "Calculatrice scientifique",
-    p3_desc: "Calculatrice desktop avec interface graphique et opérations mathématiques avancées.",
-    p3_b1: "Architecture MVC — Java Swing",
-    p3_b2: "PGCD, PPCM, factorielle, trigonométrie",
-    exp_label: "Expériences", exp_title: "Parcours professionnel",
-    exp1_role: "Stagiaire en développement web",
-    exp1_b1: "Site vitrine pour Perenco (Bootstrap) + plateforme de suivi énergétique (React JS + Spring Boot)",
-    exp1_b2: "Déploiement du système de gestion de bibliothèque Koha sur Docker",
-    exp2_role: "Stagiaire en développement web",
-    exp2_b1: "Application Java EE de gestion des présences avec authentification par rôle",
-    exp2_b2: "Modélisation BDD MySQL (employés, pointages) et tableaux de bord temps réel — solution déployée pour 8 employés",
-    contact_label: "Contact", contact_title: "Travaillons ensemble",
-    contact_desc: "Je suis disponible pour un stage de 3 mois à partir de mai. N'hésitez pas à me contacter par email ou LinkedIn.",
-    form_name: "Nom", form_msg: "Message", form_send: "Envoyer →",
-  },
-  en: {
-    nav_about: "About", nav_skills: "Skills", nav_projects: "Projects",
-    nav_exp: "Experience", nav_contact: "Contact",
-    hero_eyebrow: "Computer Science Student — L3 UHA Mulhouse",
-    hero_title: "Developer passionate about Java, Spring Boot and React — looking for a 3-month internship from May.",
-    hero_cta1: "See my projects →", hero_cta2: "Download my CV",
-    hero_scroll: "scroll",
-    about_label: "About", about_title: "Build, learn,\ndeliver.",
-    about_p1: "Computer Science student at <strong>UHA (Mulhouse)</strong>, I've been building rigorous software development habits since preparatory classes — and applied them in real conditions during two internships.",
-    about_p2: "I enjoy working on concrete challenges: a solid backend, a user-friendly interface, a clean Git pipeline. I'm looking for a <strong>3-month internship starting in May</strong>.",
-    about_p3: "Outside of code: music, running, and staying sharp on tech — Fireship, Grafikart, TechWithTim are part of my routine.",
-    stat1: "Internships", stat2: "GitHub Projects",
-    stat3: "Technologies", stat4: "UHA Mulhouse",
-    skills_label: "Skills", skills_title: "What I work with",
-    sk_lang: "Languages", sk_fw: "Frameworks", sk_db: "Databases", sk_tools: "Tools",
-    proj_label: "Projects", proj_title: "What I've built",
-    p1_name: "Quiz & Assessment System",
-    p1_desc: "Object-oriented console app for creating and running quizzes in evaluation or learning mode.",
-    p1_b1: "OOP architecture modelled with UML class diagrams",
-    p1_b2: "MCQ, free text, numeric — loaded from .txt files",
-    p1_b3: "Pro Git workflow: feature branches, pull requests, main protection",
-    p2_desc: "Web app for managing student grades, with role-based access and full CRUD operations.",
-    p2_b1: "Java EE backend — JSP & Servlets",
-    p2_b2: "Admin role management",
-    p2_b3: "Full CRUD on academic data",
-    p3_name: "Scientific Calculator",
-    p3_desc: "Desktop calculator with graphical interface and advanced mathematical operations.",
-    p3_b1: "MVC architecture — Java Swing",
-    p3_b2: "GCD, LCM, factorial, trigonometry",
-    exp_label: "Experience", exp_title: "Professional background",
-    exp1_role: "Web Development Intern",
-    exp1_b1: "Showcase website for Perenco (Bootstrap) + energy monitoring platform (React JS + Spring Boot)",
-    exp1_b2: "Deployment of Koha library management system on Docker",
-    exp2_role: "Web Development Intern",
-    exp2_b1: "Java EE attendance tracking app with role-based authentication",
-    exp2_b2: "MySQL database modelling (employees, timesheets) + real-time dashboards — delivered for 8 employees",
-    contact_label: "Contact", contact_title: "Let's work together",
-    contact_desc: "I'm available for a 3-month internship starting in May. Feel free to reach out by email or LinkedIn.",
-    form_name: "Name", form_msg: "Message", form_send: "Send →",
-  }
-};
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
 
-let currentLang = 'fr';
+    @keyframes pulse {
 
-function toggleLang() {
-  currentLang = currentLang === 'fr' ? 'en' : 'fr';
-  document.getElementById('langLabel').textContent = currentLang === 'fr' ? 'EN' : 'FR';
-  document.documentElement.lang = currentLang;
-  const dict = i18n[currentLang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) {
-      if (el.innerHTML.includes('<strong>') || dict[key].includes('<strong>')) {
-        el.innerHTML = dict[key];
-      } else {
-        el.textContent = dict[key];
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .6;
+        transform: scale(.8)
       }
     }
-  });
-}
 
-function toggleMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.btn-send');
-  btn.textContent = currentLang === 'fr' ? 'Merci !' : 'Thank you!';
-  btn.style.background = '#27ae60';
-  setTimeout(() => {
-    btn.textContent = i18n[currentLang].form_send;
-    btn.style.background = '';
-    e.target.reset();
-  }, 3000);
-}
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    .badge-text {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--green);
+      letter-spacing: .1em;
+      text-transform: uppercase
     }
-  });
-}, { threshold: 0.08 });
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -.03em;
+      margin-bottom: .5rem
+    }
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
-  });
-});
-</script>
+    .hero-name .first {
+      color: var(--text)
+    }
+
+    .hero-name .last {
+      color: var(--green)
+    }
+
+    .hero-subtitle {
+      font-size: clamp(.95rem, 1.5vw, 1.15rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: .5rem;
+      max-width: 480px
+    }
+
+    .hero-subtitle strong {
+      color: var(--text);
+      font-weight: 600
+    }
+
+    .hero-location {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      letter-spacing: .04em
+    }
+
+    .hero-location span {
+      color: var(--green)
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem
+    }
+
+    .btn-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      font-size: .88rem;
+      padding: .75rem 1.6rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all .2s;
+      letter-spacing: .02em
+    }
+
+    .btn-green:hover {
+      background: var(--green2);
+      transform: translateY(-2px)
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 500;
+      font-size: .88rem;
+      padding: .75rem 1.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border2);
+      text-decoration: none;
+      transition: all .2s
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--green);
+      color: var(--green);
+      transform: translateY(-2px)
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 1.25rem
+    }
+
+    .hero-socials a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .82rem;
+      font-family: var(--mono);
+      transition: color .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .hero-socials a:hover {
+      color: var(--green)
+    }
+
+    /* HERO RIGHT — terminal card */
+    .hero-terminal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0;
+      min-width: 300px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, .4)
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, .04);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .t-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%
+    }
+
+    .t-dot.r {
+      background: #ff5f56
+    }
+
+    .t-dot.y {
+      background: #ffbd2e
+    }
+
+    .t-dot.g {
+      background: #27c93f
+    }
+
+    .terminal-title {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--muted);
+      margin-left: 8px;
+      letter-spacing: .04em
+    }
+
+    .terminal-body {
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: .78rem;
+      line-height: 1.9
+    }
+
+    .t-line {
+      display: flex;
+      gap: 8px
+    }
+
+    .t-prompt {
+      color: var(--green)
+    }
+
+    .t-cmd {
+      color: var(--text)
+    }
+
+    .t-out {
+      color: var(--muted);
+      padding-left: 16px
+    }
+
+    .t-out.highlight {
+      color: var(--green)
+    }
+
+    .t-out.blue {
+      color: #93c5fd
+    }
+
+    .t-blank {
+      height: .6rem
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 3rem
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .section-eyebrow::before {
+      content: '//';
+      color: var(--muted);
+      font-weight: 400
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--bg2)
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: center
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.85;
+      font-size: .95rem
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 600
+    }
+
+    .about-highlight {
+      background: rgba(0, 200, 120, .06);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: .85rem 1.2rem;
+      margin: 1.5rem 0;
+      font-size: .9rem;
+      color: var(--text)
+    }
+
+    .about-highlight strong {
+      color: var(--green)
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem;
+      text-align: center;
+      transition: border-color .2s
+    }
+
+    .stat:hover {
+      border-color: var(--border2)
+    }
+
+    .stat-n {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1
+    }
+
+    .stat-l {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .35rem;
+      letter-spacing: .04em
+    }
+
+    .stat.dark {
+      background: rgba(0, 200, 120, .06);
+      border-color: rgba(0, 200, 120, .15)
+    }
+
+    .stat.dark .stat-n {
+      color: var(--text)
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: all .25s
+    }
+
+    .skill-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-3px)
+    }
+
+    .skill-card-title {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: .7rem;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: var(--text);
+      padding: 4px 10px;
+      border-radius: 4px;
+      transition: all .2s
+    }
+
+    .tag:hover {
+      background: rgba(0, 200, 120, .1);
+      border-color: var(--green);
+      color: var(--green)
+    }
+
+    .tag.main {
+      background: rgba(0, 200, 120, .1);
+      border-color: rgba(0, 200, 120, .3);
+      color: var(--green)
+    }
+
+    /* PROJECTS */
+    #projects {
+      background: var(--bg2)
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem
+    }
+
+    .proj-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column
+    }
+
+    .proj-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .35)
+    }
+
+    .proj-top {
+      padding: 1.5rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      position: relative
+    }
+
+    .proj-top::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), transparent)
+    }
+
+    .proj-lang {
+      font-family: var(--mono);
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .6rem
+    }
+
+    .proj-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: .5rem
+    }
+
+    .proj-type {
+      font-size: .78rem;
+      color: var(--muted)
+    }
+
+    .proj-body {
+      padding: 1.25rem 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column
+    }
+
+    .proj-desc {
+      font-size: .875rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      flex: 1
+    }
+
+    .proj-bullets {
+      list-style: none;
+      margin-bottom: 1.25rem
+    }
+
+    .proj-bullets li {
+      font-size: .82rem;
+      color: var(--muted);
+      padding: 3px 0 3px 14px;
+      position: relative;
+      line-height: 1.6
+    }
+
+    .proj-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: .7rem;
+      top: 5px
+    }
+
+    .proj-foot {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all .2s
+    }
+
+    .proj-link:hover {
+      color: var(--green);
+      border-color: var(--green);
+      background: rgba(0, 200, 120, .05)
+    }
+
+    .proj-featured {
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--green);
+      border: 1px solid rgba(0, 200, 120, .3);
+      background: rgba(0, 200, 120, .08);
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: .08em
+    }
+
+    /* EXPERIENCE */
+    .timeline {
+      position: relative;
+      margin-top: 2.5rem;
+      padding-left: 1.5rem
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--green), rgba(0, 200, 120, .1))
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 2.5rem
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -1.5rem;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--green);
+      transform: translateX(-6px)
+    }
+
+    .tl-dot.active {
+      background: var(--green)
+    }
+
+    .tl-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      transition: border-color .2s
+    }
+
+    .tl-card:hover {
+      border-color: var(--border2)
+    }
+
+    .tl-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-bottom: .85rem
+    }
+
+    .tl-company {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: .02em
+    }
+
+    .tl-role {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    .tl-date {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(0, 200, 120, .08);
+      border: 1px solid rgba(0, 200, 120, .2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap
+    }
+
+    .tl-points {
+      list-style: none
+    }
+
+    .tl-points li {
+      font-size: .875rem;
+      color: var(--muted);
+      padding: 4px 0 4px 16px;
+      position: relative;
+      line-height: 1.65
+    }
+
+    .tl-points li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: .7rem;
+      top: 6px
+    }
+
+    .tl-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border)
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--bg2)
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      margin-top: 2.5rem;
+      align-items: start
+    }
+
+    .contact-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem
+    }
+
+    .contact-desc strong {
+      color: var(--text)
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      transition: color .2s;
+      padding: .6rem .75rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all .2s
+    }
+
+    .contact-link:hover {
+      color: var(--green);
+      border-color: var(--border2);
+      background: rgba(0, 200, 120, .04)
+    }
+
+    .c-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .85rem;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: var(--green)
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .85rem
+    }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .fg label {
+      font-family: var(--mono);
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .fg input,
+    .fg textarea {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: .75rem 1rem;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: .88rem;
+      transition: border-color .2s;
+      resize: none;
+      outline: none
+    }
+
+    .fg input::placeholder,
+    .fg textarea::placeholder {
+      color: rgba(255, 255, 255, .2)
+    }
+
+    .fg input:focus,
+    .fg textarea:focus {
+      border-color: var(--green);
+      background: rgba(0, 200, 120, .03)
+    }
+
+    .btn-send {
+      background: var(--green);
+      color: #000;
+      border: none;
+      padding: .85rem 2rem;
+      border-radius: 7px;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      align-self: flex-start;
+      letter-spacing: .02em
+    }
+
+    .btn-send:hover {
+      background: var(--green2);
+      transform: translateY(-2px)
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted)
+    }
+
+    .footer-copy span {
+      color: var(--green)
+    }
+
+    .footer-back {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .footer-back:hover {
+      color: var(--green)
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      .hero-inner {
+        grid-template-columns: 1fr
+      }
+
+      .hero-terminal {
+        display: none
+      }
+
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem
+      }
+
+      nav {
+        padding: 0 1.5rem
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: rgba(8, 12, 20, .98);
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--border)
+      }
+
+      .nav-links.open {
+        display: flex
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      section {
+        padding: 4rem 1.5rem
+      }
+
+      .hero {
+        padding: 5rem 1.5rem 3rem
+      }
+
+      .form-row {
+        grid-template-columns: 1fr
+      }
+
+      footer {
+        flex-direction: column;
+        gap: .75rem;
+        text-align: center;
+        padding: 1.25rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo"><span class="bracket">{</span><span class="initials">JMF</span><span
+        class="bracket">}</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="JeanMarc_FULTANG_Developpeur_FullStack_Stage.pdf" class="nav-cta" download>CV ↓</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-canvas">
+      <div class="hero-grid-lines"></div>
+      <div class="hero-glow"></div>
+      <div class="hero-glow2"></div>
+      <div class="code-float" style="top:18%;left:5%;opacity:.6">import React from 'react'</div>
+      <div class="code-float" style="top:65%;left:3%">@SpringBootApplication</div>
+      <div class="code-float" style="top:30%;right:5%;opacity:.5">SELECT * FROM users</div>
+      <div class="code-float" style="top:75%;right:8%;opacity:.4">docker-compose up -d</div>
+      <div class="code-float" style="top:48%;left:42%;opacity:.3">git push origin main</div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="badge-dot"></div>
+          <span class="badge-text">Disponible pour stage — Mai 2026</span>
+        </div>
+        <h1 class="hero-name">
+          <span class="first">Jean Marc</span><br>
+          <span class="last">FULTANG</span>
+        </h1>
+        <p class="hero-subtitle">
+          <strong>Développeur Full-Stack</strong> — Java · Spring Boot · React JS<br>
+          Étudiant L3 Informatique · UHA Mulhouse
+        </p>
+        <p class="hero-location">📍 <span>Mulhouse</span>, France</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-green">Voir mes projets →</a>
+          <a href="JeanMarc_FULTANG_Developpeur_FullStack_Stage.pdf" class="btn-ghost" download target="_blank">Télécharger CV ↓</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://github.com/Full21" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            github.com/Full21
+          </a>
+          <a href="https://linkedin.com/in/jean-marc-fultang" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+            LinkedIn
+          </a>
+          <a href="https://full21.github.io" target="_blank">🌐 full21.github.io</a>
+        </div>
+      </div>
+
+      <div class="hero-terminal">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div>
+          <div class="t-dot y"></div>
+          <div class="t-dot g"></div>
+          <span class="terminal-title">jean-marc@portfolio ~ </span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> whoami</span></div>
+          <div class="t-out highlight">jean-marc-fultang</div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> cat profil.json</span></div>
+          <div class="t-out">{</div>
+          <div class="t-out">&nbsp;&nbsp;"niveau": <span class="blue">"L3 Informatique"</span>,</div>
+          <div class="t-out">&nbsp;&nbsp;"université": <span class="blue">"UHA Mulhouse"</span>,</div>
+          <div class="t-out">&nbsp;&nbsp;"stack": [<span class="blue">"Java"</span>, <span class="blue">"Spring"</span>,
+          </div>
+          <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              class="blue">"React"</span>, <span class="blue">"MySQL"</span>],</div>
+          <div class="t-out">&nbsp;&nbsp;"stages": <span class="highlight">2</span>,</div>
+          <div class="t-out">&nbsp;&nbsp;"dispo": <span class="highlight">"mai 2026"</span></div>
+          <div class="t-out">}</div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> git log --oneline</span></div>
+          <div class="t-out highlight">a3f2d1c Logiciel de graphes (Dijkstra)</div>
+          <div class="t-out">b8e4c2a AcadNotify — CRUD notes</div>
+          <div class="t-out">c1d9e3f Calculatrice scientifique MVC</div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> <span
+                class="highlight">_</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="section-eyebrow">À propos</p>
+          <h2 class="section-title">Construire, apprendre,<br>livrer.</h2>
+          <p>Étudiant en <strong>L3 Informatique à l'UHA (Mulhouse)</strong>, je me forme depuis les classes
+            préparatoires à la rigueur du développement logiciel — CPGE à l'Institut Universitaire de la Côte, Douala.
+          </p>
+          <p>J'ai eu l'occasion d'appliquer ces bases en conditions réelles lors de <strong>deux stages</strong> : chez
+            Media Press Africa (gestion des présences, Java EE) et Ova Consulting (plateforme full-stack, React + Spring
+            Boot + Docker).</p>
+          <p>J'aime les sujets concrets : un backend qui tient la charge, une interface qui fait sens, un pipeline Git
+            propre. En dehors du code : course à pied, veille tech (Fireship, Grafikart, TechWithTim, Micode).</p>
+          <div class="about-highlight">
+            <strong>Disponible pour un stage de 3 mois dès mai 2026</strong>, avec perspective d'alternance à partir de
+            septembre.
+          </div>
+        </div>
+        <div class="stats-grid reveal">
+          <div class="stat dark">
+            <div class="stat-n">2</div>
+            <div class="stat-l">Stages en entreprise</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">4+</div>
+            <div class="stat-l">Projets réalisés</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">8+</div>
+            <div class="stat-l">Technologies</div>
+          </div>
+          <div class="stat dark">
+            <div class="stat-n">L3</div>
+            <div class="stat-l">UHA Mulhouse</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-eyebrow reveal">Compétences</p>
+      <h2 class="section-title reveal">Stack technique</h2>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Langages</div>
+          <div class="tags">
+            <span class="tag main">Java</span>
+            <span class="tag main">JavaScript</span>
+            <span class="tag">Java EE</span>
+            <span class="tag">PHP</span>
+            <span class="tag">C++</span>
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Frameworks</div>
+          <div class="tags">
+            <span class="tag main">Spring Boot</span>
+            <span class="tag main">React JS</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">JSP/Servlets</span>
+            <span class="tag">Java Swing</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Base de données</div>
+          <div class="tags">
+            <span class="tag main">MySQL</span>
+            <span class="tag">Oracle</span>
+            <span class="tag">UML</span>
+            <span class="tag">Merise</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Outils</div>
+          <div class="tags">
+            <span class="tag main">Git / GitHub</span>
+            <span class="tag main">Docker</span>
+            <span class="tag">VS Code</span>
+            <span class="tag">NetBeans</span>
+            <span class="tag">Eclipse</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-eyebrow reveal">Projets</p>
+      <h2 class="section-title reveal">Ce que j'ai construit</h2>
+      <div class="projects-grid">
+
+        <div class="proj-card reveal">
+          <div class="proj-top">
+            <div class="proj-lang">Java · Desktop · 2026</div>
+            <div class="proj-name">Logiciel de manipulation de graphes</div>
+            <div class="proj-type">Projet académique — UHA Mulhouse</div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">Logiciel complet avec interface graphique (Java Swing) pour la manipulation de graphes
+              orientés/non orientés, pondérés/non pondérés.</p>
+            <ul class="proj-bullets">
+              <li>Algorithmes : Dijkstra, Dantzig, Tarjan, Kruskal, Gantt</li>
+              <li>Matrice d'adjacence et file de successeurs avec conversion</li>
+              <li>Architecture MVC complète, interface graphique soignée</li>
+            </ul>
+            <div class="proj-foot">
+              <a href="https://github.com/Full21" target="_blank" class="proj-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <span class="proj-featured">Algorithmes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="proj-top">
+            <div class="proj-lang">C++ · Console · 2025</div>
+            <div class="proj-name">Système de gestion de questionnaires</div>
+            <div class="proj-type">Projet académique — UHA Mulhouse</div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">Application orientée objet pour créer et passer des questionnaires en plusieurs modes
+              d'évaluation.</p>
+            <ul class="proj-bullets">
+              <li>3 types de questions, patron de conception Stratégie</li>
+              <li>Sérialisation/désérialisation complète en fichier texte</li>
+              <li>Couverture tests unitaires TDD avec Doctest</li>
+              <li>Workflow Git pro : branches, PRs, protection de main</li>
+            </ul>
+            <div class="proj-foot">
+              <a href="https://github.com/Kawkawa2/gestionQuestionnaire" target="_blank" class="proj-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <span class="proj-featured">TDD</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="proj-top">
+            <div class="proj-lang">Java EE · Web · 2024</div>
+            <div class="proj-name">AcadNotify</div>
+            <div class="proj-type">Application web — Gestion des notes</div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">Application web de gestion des notes étudiants avec gestion des rôles et opérations
+              CRUD complètes.</p>
+            <ul class="proj-bullets">
+              <li>Backend Java EE — JSP & Servlets</li>
+              <li>Authentification et gestion des rôles administrateur</li>
+              <li>CRUD complet sur les données académiques</li>
+            </ul>
+            <div class="proj-foot">
+              <a href="https://github.com/Full21/AcadNotify" target="_blank" class="proj-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <span class="proj-featured">Java EE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="proj-top">
+            <div class="proj-lang">Java · Desktop · 2024</div>
+            <div class="proj-name">Calculatrice scientifique</div>
+            <div class="proj-type">Application desktop — Java Swing</div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">Calculatrice desktop avec interface graphique et opérations mathématiques avancées.</p>
+            <ul class="proj-bullets">
+              <li>Architecture MVC — Java Swing</li>
+              <li>PGCD, PPCM, factorielle, trigonométrie</li>
+            </ul>
+            <div class="proj-foot">
+              <a href="https://github.com/Full21/calculatrice" target="_blank" class="proj-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <span class="proj-featured">MVC</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-eyebrow reveal">Expérience</p>
+      <h2 class="section-title reveal">Parcours professionnel</h2>
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <div class="tl-dot active"></div>
+          <div class="tl-card">
+            <div class="tl-head">
+              <div>
+                <div class="tl-company">OVA CONSULTING</div>
+                <div class="tl-role">Stagiaire Développeur Full-Stack · Douala, Cameroun</div>
+              </div>
+              <div class="tl-date">07 / 2025 — 08 / 2025</div>
+            </div>
+            <ul class="tl-points">
+              <li>Développement d'une plateforme full-stack de suivi des jetons de recharge électrique : historique des
+                tokens, modélisation UML, conception BDD SQL</li>
+              <li>Développement d'un site vitrine pour Perenco (Bootstrap)</li>
+              <li>Déploiement du système de gestion de bibliothèque Koha sur Docker</li>
+            </ul>
+            <div class="tl-tools">
+              <span class="tag main">React JS</span>
+              <span class="tag main">Spring Boot</span>
+              <span class="tag">Bootstrap</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Git</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-head">
+              <div>
+                <div class="tl-company">MEDIA PRESS AFRICA</div>
+                <div class="tl-role">Stagiaire Développeur Web · Douala, Cameroun</div>
+              </div>
+              <div class="tl-date">05 / 2024 — 07 / 2024</div>
+            </div>
+            <ul class="tl-points">
+              <li>Développement d'une application Java EE de gestion des présences avec authentification par rôle</li>
+              <li>Modélisation BDD MySQL (employés, pointages) et tableaux de bord temps réel — solution déployée pour 8
+                employés</li>
+            </ul>
+            <div class="tl-tools">
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">PHP</span>
+              <span class="tag main">MySQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FORMATION -->
+      <p class="section-eyebrow reveal" style="margin-top:4rem">Formation</p>
+      <h2 class="section-title reveal" style="font-size:1.8rem">Parcours académique</h2>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot active"></div>
+          <div class="tl-card">
+            <div class="tl-head">
+              <div>
+                <div class="tl-company">Université de Haute-Alsace</div>
+                <div class="tl-role">Licence 3 Informatique · Mulhouse, France</div>
+              </div>
+              <div class="tl-date">2025 — 2026</div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-head">
+              <div>
+                <div class="tl-company">Institut Universitaire de la Côte</div>
+                <div class="tl-role">Ingénieur Tronc Commun · Douala, Cameroun</div>
+              </div>
+              <div class="tl-date">2024 — 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-head">
+              <div>
+                <div class="tl-company">Institut Universitaire de la Côte</div>
+                <div class="tl-role">Classes Préparatoires (CPGE) · Douala, Cameroun</div>
+              </div>
+              <div class="tl-date">2022 — 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-eyebrow reveal">Contact</p>
+      <h2 class="section-title reveal">Travaillons ensemble</h2>
+      <div class="contact-grid">
+        <div class="reveal">
+          <p class="contact-desc">Je suis disponible pour un <strong>stage de 3 mois dès mai 2026</strong>, avec
+            perspective d'alternance à partir de septembre. N'hésitez pas à me contacter.</p>
+          <div class="contact-links">
+            <a href="mailto:jeanmarcfultang@gmail.com" class="contact-link">
+              <div class="c-icon">@</div>
+              jeanmarcfultang@gmail.com
+            </a>
+            <a href="tel:0759331284" class="contact-link">
+              <div class="c-icon">☎</div>
+              07 59 33 12 84
+            </a>
+            <a href="https://linkedin.com/in/jean-marc-fultang" target="_blank" class="contact-link">
+              <div class="c-icon">in</div>
+              linkedin.com/in/jean-marc-fultang
+            </a>
+            <a href="https://github.com/Full21" target="_blank" class="contact-link">
+              <div class="c-icon">gh</div>
+              github.com/Full21
+            </a>
+            <a href="https://full21.github.io" target="_blank" class="contact-link">
+              <div class="c-icon">🌐</div>
+              full21.github.io
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <form class="contact-form" action="https://formspree.io/f/mgodyrpj" method="POST">
+            <div class="form-row">
+              <div class="fg">
+                <label>Nom</label>
+                <input type="text" placeholder="Marie Dupont" name="name" required>
+              </div>
+              <div class="fg">
+                <label>Email</label>
+                <input type="email" placeholder="marie@entreprise.com" name="email" required>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Objet</label>
+              <input type="text" placeholder="Proposition de stage" name="subject">
+            </div>
+            <div class="fg">
+              <label>Message</label>
+              <textarea rows="5" placeholder="Bonjour Jean Marc..." name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn-send">Envoyer le message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-copy">© 2026 <span>Jean Marc FULTANG</span> — Mulhouse, France</span>
+    <a href="#home" class="footer-back">↑ Retour en haut</a>
+  </footer>
+
+  <script>
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('in'), i * 90);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // HAMBURGER
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+    });
+
+    // ACTIVE NAV
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--green)' : '';
+      });
+    });
+
+    // TYPING CURSOR BLINK
+    setInterval(() => {
+      const cursor = document.querySelector('.t-cmd .highlight');
+      if (cursor) cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+    }, 600);
+  </script>
 </body>
+
 </html>
