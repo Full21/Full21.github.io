@@ -649,6 +649,76 @@
       background: var(--bg2)
     }
 
+
+
+    /* PROJECT VIDEOS */
+    .proj-media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #05070d;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .proj-media video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #05070d;
+    }
+
+    .proj-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(8, 12, 20, .05), rgba(8, 12, 20, .32));
+    }
+
+    .proj-media-label {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      z-index: 2;
+      font-family: var(--mono);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #00150c;
+      background: var(--green);
+      padding: 4px 9px;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+    }
+
+    .proj-media-stack {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2;
+      font-family: var(--mono);
+      font-size: .62rem;
+      color: var(--text);
+      background: rgba(8, 12, 20, .72);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 5px 9px;
+      border-radius: 999px;
+    }
+
+    .proj-card.has-video:hover .proj-media video {
+      filter: brightness(1.08);
+    }
+
+    .video-note {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: .75rem;
+    }
+
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -1196,7 +1266,8 @@
         <p class="hero-location">📍 <span>Mulhouse</span>, France</p>
         <div class="hero-btns">
           <a href="#projects" class="btn-green">Voir mes projets →</a>
-          <a href="JeanMarc_FULTANG_Developpeur_FullStack_Stage.pdf" class="btn-ghost" download target="_blank">Télécharger CV ↓</a>
+          <a href="JeanMarc_FULTANG_Developpeur_FullStack_Stage.pdf" class="btn-ghost" download
+            target="_blank">Télécharger CV ↓</a>
         </div>
         <div class="hero-socials">
           <a href="https://github.com/Full21" target="_blank">
@@ -1278,7 +1349,7 @@
             <div class="stat-l">Stages en entreprise</div>
           </div>
           <div class="stat">
-            <div class="stat-n">4+</div>
+            <div class="stat-n">5+</div>
             <div class="stat-l">Projets réalisés</div>
           </div>
           <div class="stat">
@@ -1350,38 +1421,50 @@
     <div class="container">
       <p class="section-eyebrow reveal">Projets</p>
       <h2 class="section-title reveal">Ce que j'ai construit</h2>
+      <p class="contact-desc reveal" style="max-width:760px;margin-top:.5rem">
+        Des projets avec des démonstrations vidéo intégrées pour montrer concrètement l'interface, le workflow et les
+        fonctionnalités.
+      </p>
+
       <div class="projects-grid">
 
-        <div class="proj-card reveal">
+
+        <div class="proj-card has-video reveal">
+          <div class="proj-media">
+            <video class="project-video" controls muted playsinline preload="metadata"
+              poster="videos/posters/graphe-et-algo-demo.jpg" aria-label="Démo vidéo du projet GrapheEtAlgo">
+              <source src="videos/graphe-et-algo-demo.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            <div class="proj-media-label">Démo vidéo</div>
+            <div class="proj-media-stack">Java · Swing · Algorithmes</div>
+          </div>
           <div class="proj-top">
             <div class="proj-lang">Java · Desktop · 2026</div>
             <div class="proj-name">Logiciel de manipulation de graphes</div>
             <div class="proj-type">Projet académique — UHA Mulhouse</div>
           </div>
           <div class="proj-body">
-            <p class="proj-desc">Logiciel complet avec interface graphique (Java Swing) pour la manipulation de graphes
-              orientés/non orientés, pondérés/non pondérés.</p>
+            <p class="proj-desc">Logiciel complet avec interface Java Swing pour représenter des graphes et exécuter
+              plusieurs algorithmes classiques.</p>
             <ul class="proj-bullets">
-              <li>Algorithmes : Dijkstra, Dantzig, Tarjan, Kruskal, Gantt</li>
-              <li>Matrice d'adjacence et file de successeurs avec conversion</li>
-              <li>Architecture MVC complète, interface graphique soignée</li>
+              <li>Représentations : matrice d'adjacence, FS/APS, graphes pondérés</li>
+              <li>Algorithmes : Dijkstra, Dantzig, Tarjan, Kruskal, Gantt, Prüfer</li>
+              <li>Simulation du réseau RER parisien avec calcul du plus court chemin</li>
             </ul>
             <div class="proj-foot">
-              <a href="https://github.com/Full21" target="_blank" class="proj-link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
+              <a href="https://github.com/Full21" target="_blank" class="proj-link">GitHub</a>
               <span class="proj-featured">Algorithmes</span>
+              <span class="proj-featured">Java Swing</span>
+            </div>
+            <div class="video-note">▶ La vidéo valorise la partie visuelle, les algorithmes et le cas concret du RER.
             </div>
           </div>
         </div>
 
         <div class="proj-card reveal">
           <div class="proj-top">
-            <div class="proj-lang">C++ · Console · 2025</div>
+            <div class="proj-lang">C++ · Console · 2026</div>
             <div class="proj-name">Système de gestion de questionnaires</div>
             <div class="proj-type">Projet académique — UHA Mulhouse</div>
           </div>
@@ -1389,75 +1472,116 @@
             <p class="proj-desc">Application orientée objet pour créer et passer des questionnaires en plusieurs modes
               d'évaluation.</p>
             <ul class="proj-bullets">
-              <li>3 types de questions, patron de conception Stratégie</li>
-              <li>Sérialisation/désérialisation complète en fichier texte</li>
-              <li>Couverture tests unitaires TDD avec Doctest</li>
-              <li>Workflow Git pro : branches, PRs, protection de main</li>
+              <li>Questions texte, numériques et QCM</li>
+              <li>Modes d'évaluation : test, seconde chance, adaptatif</li>
+              <li>Sérialisation/désérialisation en fichier texte et tests unitaires Doctest</li>
             </ul>
             <div class="proj-foot">
-              <a href="https://github.com/Kawkawa2/gestionQuestionnaire" target="_blank" class="proj-link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
+              <a href="https://github.com/Kawkawa2/gestionQuestionnaire" target="_blank" class="proj-link">GitHub</a>
+              <span class="proj-featured">C++</span>
               <span class="proj-featured">TDD</span>
             </div>
           </div>
         </div>
 
-        <div class="proj-card reveal">
+        <div class="proj-card has-video reveal">
+          <div class="proj-media">
+            <video class="project-video" controls muted playsinline preload="metadata"
+              poster="videos/posters/acadnotify-demo.jpg" aria-label="Démo vidéo du projet AcadNotify">
+              <source src="videos/acadnotify-demo.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            <div class="proj-media-label">Démo vidéo</div>
+            <div class="proj-media-stack">Java EE · JSP · MySQL</div>
+          </div>
           <div class="proj-top">
-            <div class="proj-lang">Java EE · Web · 2024</div>
+            <div class="proj-lang">Java EE · Web · 2025</div>
             <div class="proj-name">AcadNotify</div>
-            <div class="proj-type">Application web — Gestion des notes</div>
+            <div class="proj-type">Application web — Gestion académique et publication des notes</div>
           </div>
           <div class="proj-body">
-            <p class="proj-desc">Application web de gestion des notes étudiants avec gestion des rôles et opérations
-              CRUD complètes.</p>
+            <p class="proj-desc">Application de gestion des notes avec workflow complet : rôles, évaluations, saisie
+              enseignant, vérification responsable et publication des résultats.</p>
             <ul class="proj-bullets">
-              <li>Backend Java EE — JSP & Servlets</li>
-              <li>Authentification et gestion des rôles administrateur</li>
-              <li>CRUD complet sur les données académiques</li>
+              <li>Connexion par rôle : étudiant, enseignant, responsable de filière, chef de département</li>
+              <li>Gestion des étudiants, enseignants, matières, évaluations et publications</li>
+              <li>Notifications aux enseignants et contrôle avant publication</li>
             </ul>
             <div class="proj-foot">
-              <a href="https://github.com/Full21/AcadNotify" target="_blank" class="proj-link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
-              <span class="proj-featured">Java EE</span>
+              <a href="https://github.com/Full21/AcadNotify" target="_blank" class="proj-link">GitHub</a>
+              <span class="proj-featured">Projet métier</span>
+              <span class="proj-featured">Gestion des notes</span>
             </div>
+            <div class="video-note">▶ La vidéo montre le parcours complet : responsable → enseignant → publication →
+              étudiant.</div>
           </div>
         </div>
 
-        <div class="proj-card reveal">
+        <div class="proj-card has-video reveal">
+          <div class="proj-media">
+            <video class="project-video" controls muted playsinline preload="metadata"
+              poster="videos/posters/jeu-de-dames-demo.jpg" aria-label="Démo vidéo du jeu de dames">
+              <source src="videos/jeu-de-dames-demo.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            <div class="proj-media-label">Démo vidéo</div>
+            <div class="proj-media-stack">Java · Swing · POO</div>
+          </div>
           <div class="proj-top">
             <div class="proj-lang">Java · Desktop · 2024</div>
+            <div class="proj-name">Jeu de dames</div>
+            <div class="proj-type">Application desktop — Projet personnel</div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">Jeu de dames développé en Java avec gestion du plateau, des pions, des déplacements et
+              des captures.</p>
+            <ul class="proj-bullets">
+              <li>Modélisation orientée objet : plateau, cases, joueurs, pions et dames</li>
+              <li>Gestion des déplacements, captures et changements d'état</li>
+              <li>Projet initié au début de mon parcours pour renforcer la logique Java</li>
+            </ul>
+            <div class="proj-foot">
+              <a href="https://github.com/Full21" target="_blank" class="proj-link">GitHub</a>
+              <span class="proj-featured">POO</span>
+              <span class="proj-featured">Jeu</span>
+            </div>
+            <div class="video-note">▶ La vidéo montre l'interface de jeu et la logique de déplacement.</div>
+          </div>
+        </div>
+
+        <div class="proj-card has-video reveal">
+          <div class="proj-media">
+            <video class="project-video" controls muted playsinline preload="metadata"
+              poster="videos/posters/calculatrice-demo.jpg" aria-label="Démo vidéo de la calculatrice scientifique">
+              <source src="videos/calculatrice-demo.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            <div class="proj-media-label">Démo vidéo</div>
+            <div class="proj-media-stack">Java · Swing · MVC</div>
+          </div>
+          <div class="proj-top">
+            <div class="proj-lang">Java · Desktop · 2025</div>
             <div class="proj-name">Calculatrice scientifique</div>
             <div class="proj-type">Application desktop — Java Swing</div>
           </div>
           <div class="proj-body">
-            <p class="proj-desc">Calculatrice desktop avec interface graphique et opérations mathématiques avancées.</p>
+            <p class="proj-desc">Calculatrice desktop avec interface graphique, opérations classiques et fonctions
+              mathématiques avancées.</p>
             <ul class="proj-bullets">
-              <li>Architecture MVC — Java Swing</li>
-              <li>PGCD, PPCM, factorielle, trigonométrie</li>
+              <li>Architecture MVC avec séparation interface, logique et modèle</li>
+              <li>Fonctions : PGCD, PPCM, factorielle, trigonométrie, mémoire ANS</li>
+              <li>Contrôle des entrées et gestion des erreurs utilisateur</li>
             </ul>
             <div class="proj-foot">
-              <a href="https://github.com/Full21/calculatrice" target="_blank" class="proj-link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
+              <a href="https://github.com/Full21/calculatrice" target="_blank" class="proj-link">GitHub</a>
               <span class="proj-featured">MVC</span>
+              <span class="proj-featured">Java Swing</span>
             </div>
+            <div class="video-note">▶ La vidéo montre les calculs essentiels et les fonctions scientifiques.</div>
           </div>
         </div>
+
+
 
       </div>
     </div>
@@ -1659,6 +1783,17 @@
       sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
       navLinks.forEach(a => {
         a.style.color = a.getAttribute('href') === '#' + current ? 'var(--green)' : '';
+      });
+    });
+
+
+
+    // PROJECT VIDEOS: pause the others when one starts playing
+    document.querySelectorAll('.project-video').forEach(video => {
+      video.addEventListener('play', () => {
+        document.querySelectorAll('.project-video').forEach(other => {
+          if (other !== video) other.pause();
+        });
       });
     });
 
